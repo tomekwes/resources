@@ -15,8 +15,13 @@ set laststatus=2
 set cino+=L0
 set autowrite "for go-vim
 
+set foldmethod=indent
+set foldnestmax=10
+set nofoldenable
+set foldlevel=2
 let mapleader = ","
 nnoremap <Leader>n :NERDTreeToggle<Enter>
+nnoremap <Space> za
 
 call plug#begin('~/.vim/plugged')
 
@@ -25,7 +30,8 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'itchyny/lightline.vim'
 "Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-Plug 'fatih/molokai'
+Plug 'altercation/vim-colors-solarized'
+Plug 'preservim/nerdcommenter'
 
 call plug#end()
 
@@ -44,5 +50,5 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 " Color scheme
 let g:rehash256 = 1
-let g:molokai_original = 1
-colorscheme molokai
+set background=dark
+colorscheme solarized
