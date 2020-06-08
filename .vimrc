@@ -22,9 +22,15 @@ set foldlevel=2
 let mapleader = ","
 nnoremap <Leader>n :NERDTreeToggle<Enter>
 nnoremap <Space> za
+set noswapfile
+set nobackup
+set undodir=~/.vim/undodir
+set undofile
+nnoremap <leader>u :UndotreeToggle<CR>
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '>-2<CR>gv=gv
 
 call plug#begin('~/.vim/plugged')
-
 
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'itchyny/lightline.vim'
@@ -35,10 +41,18 @@ Plug 'preservim/nerdcommenter'
 Plug '~/.fzf'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-
+Plug 'frazrepo/vim-rainbow'
+Plug 'tpope/vim-eunuch'
+Plug 'majutsushi/tagbar'
+Plug 'machakann/vim-highlightedyank'
+Plug 'mbbill/undotree'
 
 call plug#end()
 
+" tagbar
+nmap <F8> :TagbarToggle<CR>
+" Vim-rainbow
+let g:rainbow_active = 1
 " Vim-go configuration
 let g:go_fmt_command = "goimports"
 let g:go_auto_type_info = 1
