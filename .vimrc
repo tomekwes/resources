@@ -27,6 +27,8 @@ set nobackup
 set undodir=~/.vim/undodir
 set undofile
 nnoremap <leader>u :UndotreeToggle<CR>
+nnoremap <leader>s :FZF<CR>
+nnoremap <leader>r :GoRun<CR>
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '>-2<CR>gv=gv
 
@@ -36,7 +38,7 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'itchyny/lightline.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-Plug 'altercation/vim-colors-solarized'
+"Plug 'altercation/vim-colors-solarized'
 Plug 'preservim/nerdcommenter'
 Plug '~/.fzf'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -46,6 +48,7 @@ Plug 'tpope/vim-eunuch'
 Plug 'majutsushi/tagbar'
 Plug 'machakann/vim-highlightedyank'
 Plug 'mbbill/undotree'
+Plug 'morhetz/gruvbox'
 
 call plug#end()
 
@@ -69,7 +72,8 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " Color scheme
 let g:rehash256 = 1
 set background=dark
-colorscheme solarized
+"colorscheme solarized
+colorscheme gruvbox
 
 " Remember last coursor posision upon reopening file
 if has("autocmd")
