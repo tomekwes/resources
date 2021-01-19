@@ -1,7 +1,15 @@
 #!/bin/bash
 
-feh /home/tomek/Pictures/station.png --bg-fill
+wallpaperDir="/home/tomek/Pictures/wallpapers/"
+
+pick_random_wallpaper() {
+
+    echo $(ls $wallpaperDir | shuf | head -n 1)
+
+}
+
+feh "$wallpaperDir/$(pick_random_wallpaper)" --bg-fill
 bar &
-compton -b
-nordvpn connect Onion_Over_VPN
+#compton -b
+#nordvpn connect Ireland
 dwm
