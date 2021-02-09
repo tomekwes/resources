@@ -12,4 +12,6 @@ feh "$wallpaperDir/$(pick_random_wallpaper)" --bg-fill
 bar &
 #compton -b
 #nordvpn connect Ireland
+clipmenud &
+numlockx
 dwm

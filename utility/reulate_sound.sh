@@ -35,6 +35,12 @@ mod_volume(){
     return 2
 }
 
+mute_volume(){
+
+    amixer -D pulse set Master 1+ toggle &>/dev/null
+    return $?
+
+}
 
 arg=$(echo $1 | tr '[:upper:]' '[:lower:]')
 
@@ -43,7 +49,9 @@ if [ $arg = "get" ]; then
     exit 0
 fi
 
-if ! $(mod_volume $arg) ; then
+if [ $arg = "mute" ]; then
+    $(mute_volume)
+elif ! $(mod_volume $arg) ; then
     exit $?
 fi
 

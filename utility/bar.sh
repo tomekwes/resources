@@ -1,4 +1,4 @@
-
+#!/bin/bash
 clock(){
 
     now="$(date +"%R %d/%m/%y")"
@@ -41,8 +41,22 @@ nord_vpn_status(){
 
 sound(){
 
+    # get sound volume value
     VOL=$(amixer get Master | tail -n1 | sed -r "s/.*\[(.*)%\].*/\1/")
-    echo "🔉 $VOL%"
+    # get [on] or [off] 
+    mute=$(amixer get Master | tail -n1 | grep -Po "\[[a-z]{2,3}\]")
+    sign=""
+    if [ "$mute" = "[on]" ];
+    then
+        sign="🔉"
+    fi
+
+    
+    if [ "$mute" = "[off]" ];
+    then
+        sign=""
+    fi
+    echo "$sign $VOL%"
     return 0
 }
 
@@ -77,6 +91,7 @@ do
     net=$(internet)
     data="$net | $data"
 
+    echo $data
     xsetroot -name "| $data"
     sleep 1m
 done
