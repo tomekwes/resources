@@ -90,6 +90,8 @@ fun! ColorMyPencils()
         let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
     endif
     let g:gruvbox_invert_selection='0'
+    highlight NERDTreeDir guifg=#e9b000 guibg=NONE gui=NONE
+    highlight NERDTreeFile guifg=#4abdac guibg=NONE gui=NONE
 
     highlight ColorColumn ctermbg=0 guibg=grey
     highlight Normal guibg=none
