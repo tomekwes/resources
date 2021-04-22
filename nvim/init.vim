@@ -52,7 +52,7 @@ Plug 'nvim-lua/completion-nvim'
 Plug 'tjdevries/nlua.nvim'
 Plug 'tjdevries/lsp_extensions.nvim'
 
-Plug 'tweekmonster/gofmt.vim'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'mbbill/undotree'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -64,44 +64,27 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-projectionist' " light
 Plug 'theprimeagen/vim-be-good'
 Plug 'tpope/vim-commentary'
-Plug 'gruvbox-community/gruvbox'
-Plug 'octol/vim-cpp-enhanced-highlight'
-Plug 'preservim/nerdtree'
 
-Plug 'sainnhe/gruvbox-material'
-Plug 'flazz/vim-colorschemes'
-Plug 'chriskempson/base16-vim'
-Plug 'mileszs/ack.vim'
+Plug 'folke/tokyonight.nvim'
+
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'preservim/nerdtree'
+"
 " telescope
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzy-native.nvim'
 
 call plug#end()
 
-" --- COLORS ---
-fun! ColorMyPencils()
-    colorscheme ayu
-    set background=dark
+" -- Color scheme ---
+let g:tokyonight_style = 'night'
+let g:tokyonight_transparent = 0
+colorscheme tokyonight
 
-    let g:gruvbox_contrast_dark = 'hard'
-    if exists('+termguicolors')
-        let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-        let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-    endif
-    let g:gruvbox_invert_selection='0'
-    highlight NERDTreeDir guifg=#e9b000 guibg=NONE gui=NONE
-    highlight NERDTreeFile guifg=#4abdac guibg=NONE gui=NONE
-
-    highlight ColorColumn ctermbg=0 guibg=grey
-    highlight Normal guibg=none
-    " highlight LineNr guifg=#ff8659
-    " highlight LineNr guifg=#aed75f
-    highlight LineNr guifg=#5eacd3
-    highlight netrwDir guifg=#5eacd3
-    highlight qfFileName guifg=#aed75f
-endfun
-call ColorMyPencils()
+" --- TreeSitter ---
+lua require'nvim-treesitter.configs'.setup { highlight = { enable = true } }
 
 " --- LSP ---
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
@@ -119,36 +102,6 @@ nnoremap <leader>vrn :lua vim.lsp.buf.rename()<CR>
 nnoremap <leader>vh :lua vim.lsp.buf.hover()<CR>
 nnoremap <leader>vca :lua vim.lsp.buf.code_action()<CR>
 nnoremap <leader>vsd :lua vim.lsp.util.show_line_diagnostics(); vim.lsp.util.show_line_diagnostics()<CR>
-
-" --- FZF ---
-" nnoremap <leader>/ :FZF<CR>
-" let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8 } }
-" let $FZF_DEFAULT_OPTS='--reverse'
-" let g:fzf_branch_actions = {
-"       \ 'rebase': {
-"       \   'prompt': 'Rebase> ',
-"       \   'execute': 'echo system("{git} rebase {branch}")',
-"       \   'multiple': v:false,
-"       \   'keymap': 'ctrl-r',
-"       \   'required': ['branch'],
-"       \   'confirm': v:false,
-"       \ },
-"       \ 'track': {
-"       \   'prompt': 'Track> ',
-"       \   'execute': 'echo system("{git} checkout --track {branch}")',
-"       \   'multiple': v:false,
-"       \   'keymap': 'ctrl-t',
-"       \   'required': ['branch'],
-"       \   'confirm': v:false,
-"       \ },
-      " \}
-
-
-" --- NETRW ---
-let g:netrw_browse_split = 2
-let g:netrw_banner = 0
-let g:netrw_winsize = 25
-let g:netrw_localrmdir='rm -r'
 
 
 " --- Splits ---
@@ -211,9 +164,18 @@ require('telescope').setup{
     
     
     set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
+
+    
+    extensions = {
+        fzy_native = {
+            override_generic_sorter = false,
+            override_file_sorter = true,
+        }
+    }
     
   }
 }
+require('telescope').load_extension('fzy_native')
 EOF
 
 augroup highlight_yank
@@ -224,18 +186,6 @@ augroup END
 " telescope
 nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
-
-
-" --- Ack ---
-let g:ackprg = 'rg --vimgrep --type-not sql --smart-case'
-" Auto close the Quickfix list after pressing '<enter>' on a list item
-let g:ack_autoclose = 1
-" Any empty ack search will search for the work the cursor is on
-let g:ack_use_cword_for_empty_search = 1
-" Don't jump to first match
-cnoreabbrev Ack Ack!
-" Maps <leader>/ so we're ready to type the search keyword
-nnoremap <Leader>/ :Ack!<Space>
 
 " Navigate quickfix list with ease
 nnoremap <silent> [q :cprevious<CR>
