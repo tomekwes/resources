@@ -1,0 +1,8 @@
+# ~/.alacritty.yml
+
+shell:
+  program: /bin/zsh
+  args:
+    - -l
+    - -c
+    - "tmux attach || tmux"
